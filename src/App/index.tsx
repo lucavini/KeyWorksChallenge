@@ -1,16 +1,21 @@
 import React from 'react';
-
-// components
-import LateralMenu from '../Components/LateralMenu';
-
 // styles
-import { Container } from './styles';
+import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
+import { ThemeProvider as SCThemeProvider } from 'styled-components';
+import GlobalStyles from '../styles/Global';
+import MUITheme from '../styles/Default/Mui';
+import SCTheme from '../styles/Default/Styled';
+import Home from '../Components/Home';
 
 function App() {
   return (
-    <Container>
-      <LateralMenu />
-    </Container>
+    <MUIThemeProvider theme={MUITheme}>
+      <SCThemeProvider theme={SCTheme}>
+        <GlobalStyles />
+
+        <Home />
+      </SCThemeProvider>
+    </MUIThemeProvider>
   );
 }
 
