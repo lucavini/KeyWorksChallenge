@@ -9,6 +9,7 @@ export const Drawer = styled(MuiDrawer, {
   width: drawerWidth,
   flexShrink: 0,
   '& .MuiDrawer-paper': {
+    borderRadius: '10px',
     boxShadow: '20px 35px 50px #0000001A',
     overflow: 'hidden',
     display: 'flex',
