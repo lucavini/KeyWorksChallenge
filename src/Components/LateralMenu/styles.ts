@@ -37,6 +37,11 @@ export const Drawer = styled(MuiDrawer, {
 
   '.item': {
     margin: '10px 0px',
+
+    '&:hover .icon': {
+      fill: '#fff',
+      color: '#fff',
+    },
   },
 }));
 

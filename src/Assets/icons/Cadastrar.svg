@@ -1,3 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-  <path id="icone_cadastrar" data-name="icone/cadastrar" d="M5,7H3V21a2.006,2.006,0,0,0,2,2H19V21H5ZM21,3H9A2.006,2.006,0,0,0,7,5V17a2.006,2.006,0,0,0,2,2H21a2.006,2.006,0,0,0,2-2V5A2.006,2.006,0,0,0,21,3Zm-1,9H16v4H14V12H10V10h4V6h2v4h4Z" transform="translate(-3 -3)" fill="#3a5138"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path data-name="icone/cadastrar" d="M2 4H0v14a2.006 2.006 0 0 0 2 2h14v-2H2Zm16-4H6a2.006 2.006 0 0 0-2 2v12a2.006 2.006 0 0 0 2 2h12a2.006 2.006 0 0 0 2-2V2a2.006 2.006 0 0 0-2-2Zm-1 9h-4v4h-2V9H7V7h4V3h2v4h4Z" fill=""/></svg>
