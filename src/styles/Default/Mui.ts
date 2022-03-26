@@ -23,6 +23,10 @@ const theme = createTheme({
     error: {
       main: '#A31E20',
     },
+
+    info: {
+      main: '#D60297',
+    },
   },
 });
 

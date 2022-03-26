@@ -5,6 +5,7 @@ import MenuBacklog from '../MenuBacklog';
 import MenuDivider from '../MenuDivider';
 import LateralMenu from '../LateralMenu';
 import MenuConcluded from '../MenuConcluded';
+import TopBar from '../TopBar';
 
 // styles
 import { Container, ContentBox } from './styles';
@@ -14,7 +15,9 @@ function Home() {
     <Container>
       <LateralMenu />
       <MenuBacklog />
-      <ContentBox>inicio inicio inicio inicio</ContentBox>
+      <ContentBox>
+        <TopBar />
+      </ContentBox>
       <MenuDivider />
       <MenuConcluded />
     </Container>

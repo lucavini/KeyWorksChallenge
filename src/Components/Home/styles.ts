@@ -8,6 +8,5 @@ export const Container = styled('main')`
 
 export const ContentBox = styled('div')`
   width: 100%;
-  margin-left: 65px; 
-  background: gray;
+  margin-left: 65px;
 `;
