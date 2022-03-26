@@ -1,18 +1,22 @@
 import React from 'react';
 
 // Components
+import MenuBacklog from '../MenuBacklog';
+import MenuDivider from '../MenuDivider';
 import LateralMenu from '../LateralMenu';
-import LeftDrawer from '../LeftDrawer';
+import MenuConcluded from '../MenuConcluded';
 
 // styles
-import { Container } from './styles';
+import { Container, ContentBox } from './styles';
 
 function Home() {
   return (
     <Container>
       <LateralMenu />
-      <LeftDrawer />
-      inicio
+      <MenuBacklog />
+      <ContentBox>inicio inicio inicio inicio</ContentBox>
+      <MenuDivider />
+      <MenuConcluded />
     </Container>
   );
 }
