@@ -14,7 +14,7 @@ export const CustomDrawer = styled.div<Props>`
   align-items: center;
   transition: all ease-in-out 0.2s;
   z-index: 100;
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   margin-right: 60px;

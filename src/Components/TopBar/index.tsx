@@ -63,7 +63,7 @@ function TopBar() {
                 horizontal: 'right',
               }}
             >
-              <Bell className='icon' />
+              <Bell className='icon bell' />
             </Badge>
           </IconButton>
 

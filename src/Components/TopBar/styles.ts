@@ -72,8 +72,13 @@ export const Controllers = styled('div')`
     fill: ${({ theme }) => theme.palette.primary.dark};
   }
 
+  .bell {
+    width: 26px;
+    height: 32px;
+  }
+
   .button {
-    margin-left: 32px;
+    margin-left: 25px;
   }
 `;
 
@@ -125,6 +130,7 @@ export const StyledInputBase = styled(InputBase)(() => ({
 }));
 
 export const StyledButton = styled(Button)`
+  width: 136px;
   height: 44px;
   margin-left: 24px;
   background: ${({ theme }) => theme.palette.primary.light};
