@@ -5,8 +5,8 @@ import TopBar from '../TopBar';
 import Projects from '../Projects';
 import MenuBacklog from '../MenuBacklog';
 import LateralMenu from '../LateralMenu';
-// import MenuDivider from '../MenuDivider';
-// import MenuConcluded from '../MenuConcluded';
+import MenuDivider from '../MenuDivider';
+import MenuConcluded from '../MenuConcluded';
 
 // styles
 import { Container, ContentBox } from './styles';
@@ -20,8 +20,8 @@ function Home() {
         <TopBar />
         <Projects />
       </ContentBox>
-      {/* <MenuDivider />
-      <MenuConcluded /> */}
+      <MenuDivider />
+      <MenuConcluded />
     </Container>
   );
 }

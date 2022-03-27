@@ -6,11 +6,11 @@ import { Container } from './styles';
 function Projects() {
   return (
     <Container>
-      <ProjectColumn columnTitle='Aguardando' />
-      <ProjectColumn columnTitle='Em Andamento' />
-      <ProjectColumn columnTitle='Pendência' />
-      <ProjectColumn columnTitle='Finalizado' />
-      <ProjectColumn columnTitle='Outros' />
+      <ProjectColumn columnTitle='Aguardando' Time={1} Total={10} />
+      <ProjectColumn columnTitle='Em Andamento' Time={1} Total={10} />
+      <ProjectColumn columnTitle='Pendência' Time={1} Total={10} />
+      <ProjectColumn columnTitle='Finalizado' Time={1} Total={10} />
+      <ProjectColumn columnTitle='Outros' Time={1} Total={10} />
     </Container>
   );
 }
