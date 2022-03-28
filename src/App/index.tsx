@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-return */
 import React from 'react';
 
 // Styles

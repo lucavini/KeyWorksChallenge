@@ -1,11 +1,16 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 
+import { Droppable } from 'react-beautiful-dnd';
+
+// Components
 import Card from '../Card';
-
-import { Column, Header } from './styles';
-
 import { ReactComponent as Clock } from '../../Assets/icons/Clock.svg';
 
+// styles
+import { Column, Header } from './styles';
+
+// Utils
 import { Project } from '../../Context/ProjectContext';
 
 type Props = {
@@ -17,28 +22,37 @@ type Props = {
 
 function ProjectColumn({ columnTitle, Time, Total, projects }: Props) {
   return (
-    <Column>
-      <Header>
-        <h2>{columnTitle}</h2>
-        <div>
-          <Clock className='icon' />
-          <p className='time'>{Time}h</p>
-          <p className='total'>{Total}</p>
-        </div>
-      </Header>
+    <Droppable droppableId={columnTitle}>
+      {(provided) => (
+        <Column ref={provided.innerRef} {...provided.droppableProps}>
 
-      {projects?.map((ProjectCard, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <React.Fragment key={index}>
-          <Card
-            title={ProjectCard.title}
-            typeActivity={ProjectCard.typeActivity}
-            typeProject={ProjectCard.typeProject}
-            description={ProjectCard.description}
-          />
-        </React.Fragment>
-      ))}
-    </Column>
+          <Header>
+            <h2>{columnTitle}</h2>
+            <div>
+              <Clock className='icon' />
+              <p className='time'>{Time}h</p>
+              <p className='total'>{Total}</p>
+            </div>
+          </Header>
+
+          {projects?.map((ProjectCard, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <React.Fragment key={index}>
+              <Card
+                id={String(index)}
+                index={index}
+                title={ProjectCard.title}
+                typeActivity={ProjectCard.typeActivity}
+                typeProject={ProjectCard.typeProject}
+                description={ProjectCard.description}
+              />
+            </React.Fragment>
+          ))}
+
+          {provided.placeholder}
+        </Column>
+      )}
+    </Droppable>
   );
 }
 
