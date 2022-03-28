@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
+import { Draggable } from 'react-beautiful-dnd';
 
 // Components
 import { styled } from '@mui/material/styles';
@@ -34,87 +35,105 @@ const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
 // Usar a branch master, fazer pull, após isso rodar o comando "edge migration".
 
 type Props = {
+  id: string;
+  index: number;
   title: string;
   typeActivity: string;
   typeProject: string;
   description: string;
 };
 
-function Card({ title, typeActivity, typeProject, description }: Props) {
+function Card({
+  id,
+  index,
+  title,
+  typeActivity,
+  typeProject,
+  description,
+}: Props) {
   return (
-    <CardProject>
-      <Header>
-        <Type>{typeActivity}</Type>
-        <div className='code'>
-          <p className='label'>Código:</p>
-          <p className='code-number'>#12345</p>
-        </div>
-      </Header>
+    <Draggable draggableId={id} index={index}>
+      {(provided) => (
 
-      <Title>{title}</Title>
+        <CardProject
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
+          <Header>
+            <Type>{typeActivity}</Type>
+            <div className='code'>
+              <p className='label'>Código:</p>
+              <p className='code-number'>#12345</p>
+            </div>
+          </Header>
 
-      <Infos>
-        <div className='project'>
-          <p className='label'>Projeto:</p>
-          <p className='project-name'>{typeProject}</p>
-        </div>
+          <Title>{title}</Title>
 
-        <div className='schedule'>
-          <p className='label'>Prevista:</p>
-          <p className='date-label'>
-            <Calendar className='calendar' />
-            <span className='date'>30/12/2021</span>
-          </p>
-        </div>
-      </Infos>
+          <Infos>
+            <div className='project'>
+              <p className='label'>Projeto:</p>
+              <p className='project-name'>{typeProject}</p>
+            </div>
 
-      <Description>
-        <p className='label'>Descrição:</p>
-        <CustomWidthTooltip title={description} placement='right-end'>
-          <p>{description}</p>
-        </CustomWidthTooltip>
-      </Description>
+            <div className='schedule'>
+              <p className='label'>Prevista:</p>
+              <p className='date-label'>
+                <Calendar className='calendar' />
+                <span className='date'>30/12/2021</span>
+              </p>
+            </div>
+          </Infos>
 
-      <Following>
-        <span>Acompanhamento</span>
-      </Following>
+          <Description>
+            <p className='label'>Descrição:</p>
+            <CustomWidthTooltip title={description} placement='right-end'>
+              <p>{description}</p>
+            </CustomWidthTooltip>
+          </Description>
 
-      <Schedule>
-        <div className='project'>
-          <p className='label'>Previsto:</p>
-          <p className='time'>
-            <Clock className='icon' /> 00:30
-          </p>
-        </div>
-        <Status>Em dia</Status>
-      </Schedule>
+          <Following>
+            <span>Acompanhamento</span>
+          </Following>
 
-      <Team>
-        <div className='project'>
-          <p className='label'>Saldo:</p>
-          <p className='time'>
-            <Clock className='icon' /> <span>+00:30</span>
-          </p>
-        </div>
+          <Schedule>
+            <div className='project'>
+              <p className='label'>Previsto:</p>
+              <p className='time'>
+                <Clock className='icon' /> 00:30
+              </p>
+            </div>
+            <Status>Em dia</Status>
+          </Schedule>
 
-        <div className='teams'>
-          <p className='label'>Equipe:</p>
-          <div className='teams-circles'>
-            <TeamCircle>
-              <span>AS</span>
-            </TeamCircle>
+          <Team>
+            <div className='project'>
+              <p className='label'>Saldo:</p>
+              <p className='time'>
+                <Clock className='icon' /> <span>+00:30</span>
+              </p>
+            </div>
 
-            <TeamCircle>
-              <span>PH</span>
-            </TeamCircle>
+            <div className='teams'>
+              <p className='label'>Equipe:</p>
+              <div className='teams-circles'>
+                <TeamCircle>
+                  <span>AS</span>
+                </TeamCircle>
 
-            <TeamCircle>
-              <span>WO</span>
-            </TeamCircle>
-          </div>
-        </div>
-      </Team>
-    </CardProject>
+                <TeamCircle>
+                  <span>PH</span>
+                </TeamCircle>
+
+                <TeamCircle>
+                  <span>WO</span>
+                </TeamCircle>
+              </div>
+            </div>
+          </Team>
+        </CardProject>
+      )}
+    </Draggable>
   );
 }
 

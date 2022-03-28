@@ -109,6 +109,7 @@ export const Following = styled.p`
   text-align: center;
   border-bottom: 1px solid #0000004d;
   line-height: 0.1em;
+  opacity: 0.6;
 
   span {
     position: absolute;

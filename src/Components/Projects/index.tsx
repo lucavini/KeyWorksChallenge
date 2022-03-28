@@ -11,6 +11,7 @@ function Projects() {
   return (
     <Container>
       <ProjectColumn
+        id='waiting'
         columnTitle='Aguardando'
         Time={1}
         Total={10}
@@ -18,6 +19,7 @@ function Projects() {
       />
 
       <ProjectColumn
+        id='ongoing'
         columnTitle='Em Andamento'
         Time={1}
         Total={10}
@@ -25,6 +27,7 @@ function Projects() {
       />
 
       <ProjectColumn
+        id='pendency'
         columnTitle='Pendência'
         Time={1}
         Total={10}
@@ -32,6 +35,7 @@ function Projects() {
       />
 
       <ProjectColumn
+        id='finished'
         columnTitle='Finalizado'
         Time={1}
         Total={10}
@@ -39,6 +43,7 @@ function Projects() {
       />
 
       <ProjectColumn
+        id='other'
         columnTitle='Outros'
         Time={1}
         Total={10}

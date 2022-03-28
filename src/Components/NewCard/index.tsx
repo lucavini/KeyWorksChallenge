@@ -46,8 +46,15 @@ function NewCard({ handleClose }: Props) {
   };
 
   const handleClick = () => {
-    setWaiting((prevState) => [project, ...prevState]);
+    setWaiting((prevState) => [
+      {
+        ...project,
+        id: `${String(Math.random() * 100000)}1sdf${String(Math.random() * 100000)}`,
+      },
+      ...prevState,
+    ]);
     setProjects({
+      id: '',
       title: '',
       typeActivity: '',
       typeProject: '',

@@ -3,11 +3,35 @@
 import React from 'react';
 
 export interface Project {
+  id: string;
   title: string;
   typeActivity: string;
   typeProject: string;
   teams: string[];
   description: string;
+}
+
+export interface Column {
+  waiting: {
+    state: Project[];
+    setState: React.Dispatch<React.SetStateAction<Project[]>>;
+  };
+  ongoing: {
+    state: Project[];
+    setState: React.Dispatch<React.SetStateAction<Project[]>>;
+  };
+  pendency: {
+    state: Project[];
+    setState: React.Dispatch<React.SetStateAction<Project[]>>;
+  };
+  finished: {
+    state: Project[];
+    setState: React.Dispatch<React.SetStateAction<Project[]>>;
+  };
+  other: {
+    state: Project[];
+    setState: React.Dispatch<React.SetStateAction<Project[]>>;
+  };
 }
 
 interface ProjectContextValue {
@@ -23,6 +47,7 @@ interface ProjectContextValue {
   setFinished: React.Dispatch<React.SetStateAction<Project[]>>;
   other: Project[];
   setOther: React.Dispatch<React.SetStateAction<Project[]>>;
+  Columns: Column;
 }
 
 interface ChildrenProps {
@@ -41,12 +66,36 @@ export function ProjectProvider({ children }: ChildrenProps) {
   const [other, setOther] = React.useState<Project[]>([]);
 
   const [project, setProjects] = React.useState<Project>({
+    id: '',
     title: '',
     typeActivity: '',
     typeProject: '',
     teams: [],
     description: '',
   });
+
+  const Columns: Column = {
+    waiting: {
+      state: waiting,
+      setState: setWaiting,
+    },
+    ongoing: {
+      state: ongoing,
+      setState: setOngoing,
+    },
+    pendency: {
+      state: pendency,
+      setState: setPendency,
+    },
+    finished: {
+      state: finished,
+      setState: setFinished,
+    },
+    other: {
+      state: other,
+      setState: setOther,
+    },
+  };
 
   return (
     <ProjectContext.Provider
@@ -63,8 +112,11 @@ export function ProjectProvider({ children }: ChildrenProps) {
         setFinished,
         other,
         setOther,
+        Columns,
       }}
     >
+      {console.log('waiting: ', waiting)}
+      {console.log('ongoing: ', ongoing)}
       {children}
     </ProjectContext.Provider>
   );
