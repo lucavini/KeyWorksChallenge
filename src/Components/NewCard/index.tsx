@@ -6,10 +6,11 @@ import React from 'react';
 
 // Components
 import TextField, { TextFieldProps } from '@mui/material/TextField';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -27,7 +28,18 @@ const teams = ['Afonso Solano', 'Pedro Henrique', 'Wellington Oliveira'];
 
 function NewCard() {
   const { project, setProjects } = React.useContext(ProjectContext);
-  const [value, setValue] = React.useState<Date | null>(new Date());
+  const [timeValue, setValue] = React.useState<Date | null>(new Date());
+
+  const handleChange = (event: SelectChangeEvent<typeof project.teams>) => {
+    const {
+      target: { value },
+    } = event;
+
+    setProjects((prevState) => ({
+      ...prevState,
+      teams: typeof value === 'string' ? value.split(',') : value,
+    }));
+  };
 
   return (
     <BoxModal>
@@ -48,7 +60,16 @@ function NewCard() {
 
       <FormControl className='firstColumn' fullWidth>
         <InputLabel>Tipo de Atividade</InputLabel>
-        <Select label='Tipo de Atividade'>
+        <Select
+          label='Tipo de Atividade'
+          value={project?.typeActivity}
+          onChange={({ target }) =>
+            setProjects((prevState) => ({
+              ...prevState,
+              typeActivity: target.value,
+            }))
+          }
+        >
           <MenuItem value=''>
             <em>Tipo de Atividade</em>
           </MenuItem>
@@ -67,7 +88,7 @@ function NewCard() {
               <TextField {...props} />
             )}
             label='Data Prevista'
-            value={value}
+            value={timeValue}
             onChange={(newValue: React.SetStateAction<Date | null>) => {
               setValue(newValue);
             }}
@@ -77,7 +98,16 @@ function NewCard() {
 
       <FormControl className='firstColumn' fullWidth>
         <InputLabel>Tipo de Projeto</InputLabel>
-        <Select label='Tipo de Atividade'>
+        <Select
+          label='Tipo de Atividade'
+          value={project?.typeProject}
+          onChange={({ target }) =>
+            setProjects((prevState) => ({
+              ...prevState,
+              typeProject: target.value,
+            }))
+          }
+        >
           <MenuItem value=''>
             <em>Tipo de Projeto</em>
           </MenuItem>
@@ -90,14 +120,21 @@ function NewCard() {
       </FormControl>
 
       <FormControl className='secondeColumn' fullWidth>
-        <InputLabel>Equipes</InputLabel>
-        <Select label='Equipes'>
-          <MenuItem value=''>
-            <em>Equipes</em>
-          </MenuItem>
-          {teams?.map((team, index) => (
-            <MenuItem key={index} value={team}>
-              {team}
+        <InputLabel id='demo-multiple-name-label'>Equipes</InputLabel>
+        <Select
+          labelId='demo-multiple-name-label'
+          id='demo-multiple-name'
+          multiple
+          value={project?.teams}
+          onChange={handleChange}
+          input={<OutlinedInput label='Equipes' />}
+        >
+          {teams?.map((name) => (
+            <MenuItem
+              key={name}
+              value={name}
+            >
+              {name}
             </MenuItem>
           ))}
         </Select>
@@ -109,6 +146,13 @@ function NewCard() {
         label='Descrição do projeto'
         multiline
         rows={4}
+        value={project?.description}
+        onChange={({ target }) =>
+          setProjects((prevState) => ({
+            ...prevState,
+            description: target.value,
+          }))
+        }
       />
 
       <Button
