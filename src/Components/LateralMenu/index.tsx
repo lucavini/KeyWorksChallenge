@@ -2,9 +2,12 @@ import React from 'react';
 
 // Components
 import List from '@mui/material/List';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import NewCard from '../NewCard';
 
 // styles
 import { Drawer, AddCard } from './styles';
@@ -22,9 +25,12 @@ import { ReactComponent as BullseyeArrow } from '../../Assets/icons/bullseyeArro
 
 function LateralMenu() {
   const [addCartHover, setAddCartHover] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
-    <div>
+    <nav>
       <Drawer variant='permanent' anchor='left'>
         <img className='logo' src={logoProject} alt='logoProject' />
 
@@ -95,6 +101,7 @@ function LateralMenu() {
         <div>
           <AddCard
             className='item'
+            onClick={handleOpen}
             onMouseOver={() => setAddCartHover(true)}
             onMouseOut={() => setAddCartHover(false)}
           >
@@ -102,7 +109,18 @@ function LateralMenu() {
           </AddCard>
         </div>
       </Drawer>
-    </div>
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
+      >
+        <Box>
+          <NewCard />
+        </Box>
+      </Modal>
+    </nav>
   );
 }
 
