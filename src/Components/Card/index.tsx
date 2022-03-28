@@ -31,26 +31,32 @@ const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
   },
 });
 
-const description = `Usar a branch master, fazer pull, após isso rodar o comando "edge
-migration".`;
+// Usar a branch master, fazer pull, após isso rodar o comando "edge migration".
 
-function Card() {
+type Props = {
+  title: string;
+  typeActivity: string;
+  typeProject: string;
+  description: string;
+};
+
+function Card({ title, typeActivity, typeProject, description }: Props) {
   return (
     <CardProject>
       <Header>
-        <Type>DESENVOLVIMENTO</Type>
+        <Type>{typeActivity}</Type>
         <div className='code'>
           <p className='label'>Código:</p>
           <p className='code-number'>#12345</p>
         </div>
       </Header>
 
-      <Title>criar migration</Title>
+      <Title>{title}</Title>
 
       <Infos>
         <div className='project'>
           <p className='label'>Projeto:</p>
-          <p className='project-name'>Company</p>
+          <p className='project-name'>{typeProject}</p>
         </div>
 
         <div className='schedule'>

@@ -26,8 +26,12 @@ const activities = ['desenvolvimento', 'ux | ui', 'financeiro'];
 const typeProject = ['Company', 'Client', 'Work'];
 const teams = ['Afonso Solano', 'Pedro Henrique', 'Wellington Oliveira'];
 
-function NewCard() {
-  const { project, setProjects } = React.useContext(ProjectContext);
+type Props = {
+  handleClose: () => void;
+};
+
+function NewCard({ handleClose }: Props) {
+  const { project, setProjects, setWaiting } = React.useContext(ProjectContext);
   const [timeValue, setValue] = React.useState<Date | null>(new Date());
 
   const handleChange = (event: SelectChangeEvent<typeof project.teams>) => {
@@ -39,6 +43,18 @@ function NewCard() {
       ...prevState,
       teams: typeof value === 'string' ? value.split(',') : value,
     }));
+  };
+
+  const handleClick = () => {
+    setWaiting((prevState) => [project, ...prevState]);
+    setProjects({
+      title: '',
+      typeActivity: '',
+      typeProject: '',
+      teams: [],
+      description: '',
+    });
+    handleClose();
   };
 
   return (
@@ -130,10 +146,7 @@ function NewCard() {
           input={<OutlinedInput label='Equipes' />}
         >
           {teams?.map((name) => (
-            <MenuItem
-              key={name}
-              value={name}
-            >
+            <MenuItem key={name} value={name}>
               {name}
             </MenuItem>
           ))}
@@ -158,6 +171,7 @@ function NewCard() {
       <Button
         className='secondColumn'
         variant='contained'
+        onClick={handleClick}
         sx={{ justifySelf: 'end' }}
       >
         Novo Cartão +

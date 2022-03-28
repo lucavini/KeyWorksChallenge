@@ -117,7 +117,7 @@ function LateralMenu() {
         aria-describedby='modal-modal-description'
       >
         <Box>
-          <NewCard />
+          <NewCard handleClose={handleClose} />
         </Box>
       </Modal>
     </nav>
