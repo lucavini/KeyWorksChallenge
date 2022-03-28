@@ -14,18 +14,18 @@ import { Column, Header } from './styles';
 import { Project } from '../../Context/ProjectContext';
 
 type Props = {
+  id: string;
   columnTitle: string;
   Time: number;
   Total: number;
   projects: Project[];
 };
 
-function ProjectColumn({ columnTitle, Time, Total, projects }: Props) {
+function ProjectColumn({ id, columnTitle, Time, Total, projects }: Props) {
   return (
-    <Droppable droppableId={columnTitle}>
+    <Droppable droppableId={id}>
       {(provided) => (
         <Column ref={provided.innerRef} {...provided.droppableProps}>
-
           <Header>
             <h2>{columnTitle}</h2>
             <div>
@@ -39,7 +39,7 @@ function ProjectColumn({ columnTitle, Time, Total, projects }: Props) {
             // eslint-disable-next-line react/no-array-index-key
             <React.Fragment key={index}>
               <Card
-                id={String(index)}
+                id={ProjectCard.id}
                 index={index}
                 title={ProjectCard.title}
                 typeActivity={ProjectCard.typeActivity}
