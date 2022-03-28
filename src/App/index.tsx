@@ -6,14 +6,16 @@ import GlobalStyles from '../styles/Global';
 import MUITheme from '../styles/Default/Mui';
 import SCTheme from '../styles/Default/Styled';
 import Home from '../Components/Home';
+import { ProjectProvider } from '../Context/ProjectContext';
 
 function App() {
   return (
     <MUIThemeProvider theme={MUITheme}>
       <SCThemeProvider theme={SCTheme}>
         <GlobalStyles />
-
-        <Home />
+        <ProjectProvider>
+          <Home />
+        </ProjectProvider>
       </SCThemeProvider>
     </MUIThemeProvider>
   );
