@@ -49,6 +49,7 @@ function NewCard({ handleClose }: Props) {
     setWaiting((prevState) => [
       {
         ...project,
+        date: timeValue,
         id: `${String(Math.random() * 100000)}1sdf${String(Math.random() * 100000)}`,
       },
       ...prevState,
@@ -60,6 +61,7 @@ function NewCard({ handleClose }: Props) {
       typeProject: '',
       teams: [],
       description: '',
+      date: new Date(),
     });
     handleClose();
   };

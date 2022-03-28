@@ -1,4 +1,9 @@
-import styled from 'styled-components';
+/* eslint-disable no-nested-ternary */
+import styled, { css } from 'styled-components';
+
+type Props = {
+  days: number;
+};
 
 export const CardProject = styled.div`
   position: relative;
@@ -146,19 +151,22 @@ export const Schedule = styled.div`
   }
 `;
 
-export const Status = styled.div`
+export const Status = styled.div<Props>`
   width: 80px;
   height: 24px;
   margin-top: 3px;
-  background: ${({ theme }) => theme.palette.primary.main};
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 3px;
-  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 11px;
   font-weight: 700;
+
+  ${({ days }) => css`
+    background: ${days > 5 ? '#107154' : days > 2 ? '#F7E702' : '#A31E20'};
+    color: ${days > 5 ? '#fff' : days > 2 ? '#000000B3' : '#fff'};
+  `}
 `;
 
 export const Team = styled.div`

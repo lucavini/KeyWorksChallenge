@@ -1,7 +1,9 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+import moment from 'moment';
 
 // Components
 import { styled } from '@mui/material/styles';
@@ -41,6 +43,7 @@ type Props = {
   typeActivity: string;
   typeProject: string;
   description: string;
+  date: Date | null;
 };
 
 function Card({
@@ -50,11 +53,15 @@ function Card({
   typeActivity,
   typeProject,
   description,
+  date,
 }: Props) {
+  const now = new Date();
+  const diff = moment(date, 'DD/MM/YYYY HH:mm:ss').diff(moment(now, 'DD/MM/YYYY HH:mm:ss'));
+  const days = moment.duration(diff).asDays();
+
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
-
         <CardProject
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -80,7 +87,9 @@ function Card({
               <p className='label'>Prevista:</p>
               <p className='date-label'>
                 <Calendar className='calendar' />
-                <span className='date'>30/12/2021</span>
+                <span className='date'>
+                  {moment(date).format('DD/MM/YYYY')}
+                </span>
               </p>
             </div>
           </Infos>
@@ -103,7 +112,9 @@ function Card({
                 <Clock className='icon' /> 00:30
               </p>
             </div>
-            <Status>Em dia</Status>
+            <Status days={days}>
+              {days > 5 ? 'Em dia' : days > 2 ? 'Atenção' : 'Em Atraso'}
+            </Status>
           </Schedule>
 
           <Team>

@@ -8,6 +8,7 @@ export interface Project {
   typeActivity: string;
   typeProject: string;
   teams: string[];
+  date: Date | null;
   description: string;
 }
 
@@ -72,6 +73,7 @@ export function ProjectProvider({ children }: ChildrenProps) {
     typeProject: '',
     teams: [],
     description: '',
+    date: new Date(),
   });
 
   const Columns: Column = {
@@ -115,8 +117,6 @@ export function ProjectProvider({ children }: ChildrenProps) {
         Columns,
       }}
     >
-      {console.log('waiting: ', waiting)}
-      {console.log('ongoing: ', ongoing)}
       {children}
     </ProjectContext.Provider>
   );
