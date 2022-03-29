@@ -1,46 +1,38 @@
-# Getting Started with Create React App
+# Teste prático KeyWorks
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## 📝 Sobre o Projeto
+Projeto de um gerenciador de atividades em formato kanban
 
-In the project directory, you can run:
+## ⚙️ Tecnologias e bibliotecas usadas no Projeto
 
-### `yarn start`
+<ul>
+  <li> <a href="https://create-react-app.dev/">React</a> </li>
+  <li> <a href="https://www.typescriptlang.org/">TypeScript</a> </li>
+  <li> <a href="https://mui.com/getting-started/installation/">Material-UI</a> </li>
+  <li> <a href="https://github.com/atlassian/react-beautiful-dnd">react-beautiful-dnd</a> </li>
+</ul>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## ✨ Demonstração
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Veja abaixo algumas Screenshots do projeto. 
 
-### `yarn test`
+<img src="/src/Assets/images/screenshot1.png">
+<img src="/src/Assets/images/screenshot2.png">
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## ⚙️ℹ️ Instalação
 
-### `yarn build`
+```
+# Clone o repositório em alguma pasta em sua máquina
+$ git clone git@github.com:lucavini/KeyWorksChallenge.git
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Entre no repositório
+$ cd KeyWorksChallenge
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Instale as dependencias do projeto com:
+$ npm install ou yarn install
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Execute a aplicação.
+$ npm start ou yarn start
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Abra http://localhost:3000 no seu navegador
