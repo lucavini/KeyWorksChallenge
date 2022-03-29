@@ -2,7 +2,15 @@
 
 
 ## 📝 Sobre o Projeto
-Projeto de um gerenciador de atividades em formato kanban
+Projeto de um gerenciador de atividades em formato kanban.
+Clique <a href="https://keyworkschallenge.vercel.app/">aqui</a> para visualizar a aplicação em produção
+
+## ⚙️ Funcionalidades desenvolvidas
+<ul>
+  <li> Criação de novos cards de atividade </li>
+  <li> Função de Drag and drop horizontal de vertical </li>
+</ul>
+  
 
 ## ⚙️ Tecnologias e bibliotecas usadas no Projeto
 
