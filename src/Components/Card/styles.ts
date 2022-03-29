@@ -164,8 +164,8 @@ export const Status = styled.div<Props>`
   font-weight: 700;
 
   ${({ days }) => css`
-    background: ${days > 5 ? '#107154' : days > 2 ? '#F7E702' : '#A31E20'};
-    color: ${days > 5 ? '#fff' : days > 2 ? '#000000B3' : '#fff'};
+    background: ${days > 5 ? '#107154' : days >= 0.5 ? '#F7E702' : '#A31E20'};
+    color: ${days > 5 ? '#fff' : days >= 0.5 ? '#000000B3' : '#fff'};
   `}
 `;
 

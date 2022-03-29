@@ -113,7 +113,7 @@ function Card({
               </p>
             </div>
             <Status days={days}>
-              {days > 5 ? 'Em dia' : days > 2 ? 'Atenção' : 'Em Atraso'}
+              {days > 5 ? 'Em dia' : days >= 0.5 ? 'Atenção' : 'Em Atraso'}
             </Status>
           </Schedule>
 
