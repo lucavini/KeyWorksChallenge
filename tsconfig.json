@@ -22,5 +22,15 @@
   },
   "include": [
     "src"
+  ],
+  "plugins": [
+    {
+      "name": "typescript-styled-plugin",
+      "tags": [
+        "styled",
+        "css",
+        "sty"
+      ]
+    }
   ]
 }

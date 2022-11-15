@@ -11,7 +11,7 @@ import MUITheme from '../styles/Default/Mui';
 import SCTheme from '../styles/Default/Styled';
 
 // Components
-import Home from '../Components/Home';
+import Router from '../Router';
 import { ProjectProvider } from '../Context/ProjectContext';
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
       <SCThemeProvider theme={SCTheme}>
         <GlobalStyles />
         <ProjectProvider>
-          <Home />
+          <Router />
         </ProjectProvider>
       </SCThemeProvider>
     </MUIThemeProvider>
