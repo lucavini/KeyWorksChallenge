@@ -17,6 +17,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../../Context/authContext';
 import * as S from '../../styles';
 
 interface iFormInput {
@@ -35,6 +36,7 @@ const schema = yup.object({
 function Login() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = React.useState(false);
+  const { handleLogin } = useAuth();
 
   const {
     control,
@@ -45,7 +47,7 @@ function Login() {
   });
 
   const onSubmit: SubmitHandler<iFormInput> = async ({ email, password }) => {
-    console.log(email, password);
+    handleLogin({ email, password });
   };
 
   return (
@@ -56,38 +58,38 @@ function Login() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Controller
             control={control}
-            name='email'
-            defaultValue=''
+            name="email"
+            defaultValue=""
             render={({ field: { value, onChange } }) => (
               <TextField
                 fullWidth
                 value={value}
                 onChange={onChange}
-                label='E-mail'
+                label="E-mail"
                 helperText={errors.email?.message}
                 error={errors.email?.message !== undefined}
               />
             )}
           />
 
-          <FormControl fullWidth variant='outlined'>
+          <FormControl fullWidth variant="outlined">
             <InputLabel>Senha</InputLabel>
             <Controller
               control={control}
-              name='password'
-              defaultValue=''
+              name="password"
+              defaultValue=""
               render={({ field: { value, onChange } }) => (
                 <OutlinedInput
-                  label='Senha'
+                  label="Senha"
                   value={value}
                   onChange={onChange}
                   type={showPassword ? 'text' : 'password'}
                   error={errors.password?.message !== undefined}
                   endAdornment={
-                    <InputAdornment position='end'>
+                    <InputAdornment position="end">
                       <IconButton
                         onClick={() => setShowPassword(!showPassword)}
-                        edge='end'
+                        edge="end"
                       >
                         {showPassword ? <VisibilityOff /> : <Visibility />}
                       </IconButton>
@@ -101,14 +103,14 @@ function Login() {
             )}
           </FormControl>
 
-          <Button fullWidth type='submit' variant='contained'>
+          <Button fullWidth type="submit" variant="contained">
             Entrar
           </Button>
 
           <Button
             onClick={() => navigate('/login/register')}
             fullWidth
-            variant='outlined'
+            variant="outlined"
           >
             Cadastrar
           </Button>

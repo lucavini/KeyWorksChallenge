@@ -24,7 +24,7 @@ interface authContextData {
 
 const AuthContext = React.createContext<authContextData>({} as authContextData);
 
-export function authProvider({ children }: authProviderProps) {
+export function AuthProvider({ children }: authProviderProps) {
   const [userId, setUserId] = React.useState<User>({} as User);
   const [signed, setSigned] = React.useState(false);
 

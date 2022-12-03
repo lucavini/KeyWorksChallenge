@@ -13,15 +13,18 @@ import SCTheme from '../styles/Default/Styled';
 // Components
 import Router from '../Router';
 import { ProjectProvider } from '../Context/ProjectContext';
+import { AuthProvider } from '../Context/authContext';
 
 function App() {
   return (
     <MUIThemeProvider theme={MUITheme}>
       <SCThemeProvider theme={SCTheme}>
-        <GlobalStyles />
-        <ProjectProvider>
-          <Router />
-        </ProjectProvider>
+        <AuthProvider>
+          <GlobalStyles />
+          <ProjectProvider>
+            <Router />
+          </ProjectProvider>
+        </AuthProvider>
       </SCThemeProvider>
     </MUIThemeProvider>
   );
