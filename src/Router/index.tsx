@@ -11,11 +11,11 @@ import Home from '../Components/Home';
 import { useAuth } from '../Context/authContext';
 
 interface protectedRouteProps {
-  signed: boolean;
   children: React.ReactNode;
 }
 
-function ProtectedRoute({ signed, children }: protectedRouteProps) {
+function ProtectedRoute({ children }: protectedRouteProps) {
+  const { signed } = useAuth();
   const location = useLocation();
 
   if (!signed) {
@@ -27,11 +27,10 @@ function ProtectedRoute({ signed, children }: protectedRouteProps) {
 }
 
 function Router() {
-  const { signed } = useAuth();
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<ProtectedRoute signed={signed}><Home /></ProtectedRoute>} />
+        <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
 
         <Route path="/login/*" element={<Auth />} />
       </Routes>

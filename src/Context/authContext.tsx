@@ -26,7 +26,7 @@ const AuthContext = React.createContext<authContextData>({} as authContextData);
 
 export function AuthProvider({ children }: authProviderProps) {
   const [userId, setUserId] = React.useState<User>({} as User);
-  const [signed, setSigned] = React.useState(false);
+  const [signed, setSigned] = React.useState(true);
 
   React.useEffect(() => {
     const token = localStorage.getItem('@tokenJWT');
@@ -35,13 +35,13 @@ export function AuthProvider({ children }: authProviderProps) {
     async function autoLogin() {
       if (token && userid) {
         const tokenJWT = JSON.parse(token);
+        const id = JSON.parse(userid);
 
+        setSigned(true);
         api.defaults.headers.common.authorization = `Bearer ${tokenJWT}`;
-        const isTokenValid = await api
-          .get(`user/${userid}`)
-          .then((response) => response.data);
+        const isTokenValid = await api.get(`user/${id}`).then((response) => response.status);
 
-        if (isTokenValid) {
+        if (isTokenValid === 200) {
           setUserId({ id: userid });
           setSigned(true);
         } else {
@@ -51,6 +51,8 @@ export function AuthProvider({ children }: authProviderProps) {
           localStorage.removeItem('@user');
           api.defaults.headers.common = { Authorization: false };
         }
+      } else {
+        setSigned(false);
       }
     }
 
@@ -88,7 +90,9 @@ export function AuthProvider({ children }: authProviderProps) {
 }
 
 export function useAuth() {
-  const { handleLogin, handleLogout, signed, userId } = React.useContext(AuthContext);
+  // eslint-disable-next-line operator-linebreak
+  const { handleLogin, handleLogout, signed, userId } =
+    React.useContext(AuthContext);
 
   return { handleLogin, handleLogout, signed, userId };
 }

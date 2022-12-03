@@ -46,8 +46,13 @@ function Login() {
     resolver: yupResolver(schema),
   });
 
+  // eslint-disable-next-line consistent-return
   const onSubmit: SubmitHandler<iFormInput> = async ({ email, password }) => {
-    handleLogin({ email, password });
+    const response = await handleLogin({ email, password });
+
+    if (response === 200) {
+      navigate('/');
+    }
   };
 
   return (
