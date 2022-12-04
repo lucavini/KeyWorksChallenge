@@ -130,7 +130,6 @@ export const StyledInputBase = styled(InputBase)(() => ({
 }));
 
 export const StyledButton = styled(Button)`
-  width: 136px;
   height: 44px;
   margin-left: 24px;
   background: ${({ theme }) => theme.palette.primary.light};

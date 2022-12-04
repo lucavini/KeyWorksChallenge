@@ -2,9 +2,11 @@ import React from 'react';
 
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
+import PersonIcon from '@mui/icons-material/Person';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import { ReactComponent as Search } from '../../Assets/icons/Search.svg';
 import { ReactComponent as Clock } from '../../Assets/icons/Clock.svg';
-import { ReactComponent as Filter } from '../../Assets/icons/Filter.svg';
 import { ReactComponent as Bell } from '../../Assets/icons/Bell.svg';
 import { ReactComponent as Group } from '../../Assets/icons/Group.svg';
 
@@ -20,8 +22,19 @@ import {
   StyledInputBase,
   StyledButton,
 } from './styles';
+import { useAuth } from '../../Context/authContext';
 
 function TopBar() {
+  const { user, handleLogout } = useAuth();
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+    handleLogout();
+  };
   return (
     <Container>
       <NavContainer>
@@ -29,7 +42,7 @@ function TopBar() {
           <Title>Tarefas</Title>
 
           <div>
-            <Clock className='icon' />
+            <Clock className="icon" />
             <p>5h</p>
             <Status>10</Status>
           </div>
@@ -38,38 +51,54 @@ function TopBar() {
         <Controllers>
           <SearchContainer>
             <SearchIconWrapper>
-              <Search className='search' />
+              <Search className="search" />
             </SearchIconWrapper>
 
             <StyledInputBase
-              placeholder='Pesquisar por Tarefa...'
+              placeholder="Pesquisar por Tarefa..."
               inputProps={{ 'aria-label': 'search' }}
             />
           </SearchContainer>
 
-          <StyledButton
-            variant='contained'
-            endIcon={<Filter className='icon' />}
-          >
-            FILTRO
-          </StyledButton>
-
-          <IconButton className='button' size='large'>
+          <IconButton className="button" size="large">
             <Badge
               badgeContent={2}
-              color='info'
+              color="info"
               anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'right',
               }}
             >
-              <Bell className='icon bell' />
+              <Bell className="icon bell" />
             </Badge>
           </IconButton>
 
-          <IconButton className='button' size='large'>
-            <Group className='icon' />
+          <IconButton className="button" size="large">
+            <Group className="icon" />
           </IconButton>
+
+          <StyledButton
+            id="basic-button"
+            variant="contained"
+            onClick={handleClick}
+            endIcon={<PersonIcon className="icon" />}
+          >
+            OLA {user.name}
+          </StyledButton>
+
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <MenuItem onClick={handleClose}>Perfil</MenuItem>
+            <MenuItem onClick={handleClose}>Minha Conta</MenuItem>
+            <MenuItem onClick={handleClose}>Logout</MenuItem>
+          </Menu>
         </Controllers>
       </NavContainer>
     </Container>

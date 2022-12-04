@@ -7,6 +7,8 @@ interface authProviderProps {
 
 export interface User {
   id: string;
+  name: string;
+  email: string;
 }
 
 interface loginProps {
@@ -19,14 +21,16 @@ interface authContextData {
   handleLogin: (params: loginProps) => Promise<any>;
   handleLogout: () => void;
   signed: boolean;
-  userId: User;
+  userId: string;
+  user: User;
   autoLogin: () => Promise<boolean>;
 }
 
 const AuthContext = React.createContext<authContextData>({} as authContextData);
 
 export function AuthProvider({ children }: authProviderProps) {
-  const [userId, setUserId] = React.useState<User>({} as User);
+  const [userId, setUserId] = React.useState('');
+  const [user, setUser] = React.useState<User>({} as User);
   const [signed, setSigned] = React.useState(true);
 
   const token = localStorage.getItem('@tokenJWT');
@@ -41,13 +45,14 @@ export function AuthProvider({ children }: authProviderProps) {
       api.defaults.headers.common.authorization = `Bearer ${tokenJWT}`;
 
       try {
-        await api.get(`user/${id}`).then((response) => response.status);
+        const response = await api.get(`user/${id}`).then((res) => res.data.user);
 
-        setUserId({ id: userid });
+        setUser(response);
+        setUserId(userid);
         setSigned(true);
       } catch (error) {
         setSigned(false);
-        setUserId({} as User);
+        setUserId('');
         localStorage.removeItem('@tokenJWT');
         localStorage.removeItem('@user');
         api.defaults.headers.common = { Authorization: false };
@@ -77,7 +82,7 @@ export function AuthProvider({ children }: authProviderProps) {
 
   function handleLogout() {
     setSigned(false);
-    setUserId({} as User);
+    setUserId('');
     localStorage.removeItem('@tokenJWT');
     localStorage.removeItem('@user');
     api.defaults.headers.common = { Authorization: false };
@@ -87,7 +92,7 @@ export function AuthProvider({ children }: authProviderProps) {
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <AuthContext.Provider value={{ handleLogin, handleLogout, signed, userId, autoLogin }}>
+    <AuthContext.Provider value={{ handleLogin, handleLogout, signed, userId, autoLogin, user }}>
       {children}
     </AuthContext.Provider>
   );
@@ -95,8 +100,8 @@ export function AuthProvider({ children }: authProviderProps) {
 
 export function useAuth() {
   // eslint-disable-next-line operator-linebreak
-  const { handleLogin, handleLogout, signed, userId, autoLogin } =
+  const { handleLogin, handleLogout, signed, userId, autoLogin, user } =
     React.useContext(AuthContext);
 
-  return { handleLogin, handleLogout, signed, userId, autoLogin };
+  return { handleLogin, handleLogout, signed, userId, autoLogin, user };
 }
