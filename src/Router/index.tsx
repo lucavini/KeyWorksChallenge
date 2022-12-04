@@ -15,8 +15,8 @@ interface protectedRouteProps {
 }
 
 function ProtectedRoute({ children }: protectedRouteProps) {
-  const { signed } = useAuth();
   const location = useLocation();
+  const { signed } = useAuth();
 
   if (!signed) {
     return <Navigate to="/login" state={{ path: location.pathname }} />;

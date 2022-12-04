@@ -17,16 +17,16 @@ import { AuthProvider } from '../Context/authContext';
 
 function App() {
   return (
-    <MUIThemeProvider theme={MUITheme}>
-      <SCThemeProvider theme={SCTheme}>
-        <AuthProvider>
+    <AuthProvider>
+      <MUIThemeProvider theme={MUITheme}>
+        <SCThemeProvider theme={SCTheme}>
           <GlobalStyles />
           <ProjectProvider>
             <Router />
           </ProjectProvider>
-        </AuthProvider>
-      </SCThemeProvider>
-    </MUIThemeProvider>
+        </SCThemeProvider>
+      </MUIThemeProvider>
+    </AuthProvider>
   );
 }
 
