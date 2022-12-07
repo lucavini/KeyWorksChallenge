@@ -33,7 +33,6 @@ function TopBar() {
   };
   const handleClose = () => {
     setAnchorEl(null);
-    handleLogout();
   };
   return (
     <Container>
@@ -97,7 +96,7 @@ function TopBar() {
           >
             <MenuItem onClick={handleClose}>Perfil</MenuItem>
             <MenuItem onClick={handleClose}>Minha Conta</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </Controllers>
       </NavContainer>
