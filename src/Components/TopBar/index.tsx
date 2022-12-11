@@ -23,17 +23,22 @@ import {
   StyledButton,
 } from './styles';
 import { useAuth } from '../../Context/authContext';
+import { ProjectContext } from '../../Context/ProjectContext';
 
 function TopBar() {
   const { user, handleLogout } = useAuth();
+  const { setIsPersonal } = React.useContext(ProjectContext);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
   return (
     <Container>
       <NavContainer>
@@ -95,7 +100,7 @@ function TopBar() {
             }}
           >
             <MenuItem onClick={handleClose}>Perfil</MenuItem>
-            <MenuItem onClick={handleClose}>Minha Conta</MenuItem>
+            <MenuItem onClick={() => setIsPersonal((prev) => !prev)}>Trocar atividades</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </Controllers>

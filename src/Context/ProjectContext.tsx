@@ -49,6 +49,8 @@ interface ProjectContextValue {
   other: Project[];
   setOther: React.Dispatch<React.SetStateAction<Project[]>>;
   Columns: Column;
+  isPersonal: boolean;
+  setIsPersonal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface ChildrenProps {
@@ -65,6 +67,7 @@ export function ProjectProvider({ children }: ChildrenProps) {
   const [pendency, setPendency] = React.useState<Project[]>([]);
   const [finished, setFinished] = React.useState<Project[]>([]);
   const [other, setOther] = React.useState<Project[]>([]);
+  const [isPersonal, setIsPersonal] = React.useState(false);
 
   const [project, setProjects] = React.useState<Project>({
     id: '',
@@ -115,6 +118,8 @@ export function ProjectProvider({ children }: ChildrenProps) {
         other,
         setOther,
         Columns,
+        isPersonal,
+        setIsPersonal,
       }}
     >
       {children}
