@@ -37,7 +37,7 @@ function ProjectColumn({ id, columnTitle, Time, Total, projects }: Props) {
 
           {projects?.map((ProjectCard, index) => (
             // eslint-disable-next-line react/no-array-index-key
-            <React.Fragment key={index}>
+            <React.Fragment key={ProjectCard.id}>
               <Card
                 id={ProjectCard.id}
                 index={index}
