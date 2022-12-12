@@ -1,5 +1,7 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-no-constructed-context-values */
 /* eslint-disable comma-dangle */
+import axios from 'axios';
 import React from 'react';
 
 export interface Project {
@@ -10,6 +12,17 @@ export interface Project {
   teams: string[];
   date: Date | null;
   description: string;
+}
+
+export interface Card {
+  _id: string;
+  title: string;
+  date: string;
+  activity: string;
+  project: string;
+  description: string;
+  status: string;
+  userId: string;
 }
 
 export interface Column {
@@ -101,6 +114,34 @@ export function ProjectProvider({ children }: ChildrenProps) {
       setState: setOther,
     },
   };
+
+  async function getAllCards() {
+    const response = await axios.get(
+      isPersonal
+        ? 'http://backkanban2-env.eba-xpytrdmw.us-east-2.elasticbeanstalk.com/card/637bc9adc3ab4c119a6a37dd'
+        : 'http://backkanban2-env.eba-xpytrdmw.us-east-2.elasticbeanstalk.com/card/pro/637bc9adc3ab4c119a6a37dd'
+    );
+
+    response.data.cards.map((card: Card) => {
+      const newcard: Project = {
+        title: card.title,
+        typeProject: card.project,
+        description: card.description,
+        typeActivity: card.activity,
+        id: card._id,
+        date: new Date(),
+        teams: [],
+      };
+
+      setWaiting((prevState) => [...prevState, newcard]);
+
+      return newcard;
+    });
+  }
+
+  React.useEffect(() => {
+    getAllCards();
+  }, [isPersonal]);
 
   return (
     <ProjectContext.Provider
