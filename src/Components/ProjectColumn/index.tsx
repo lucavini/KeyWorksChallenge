@@ -43,7 +43,7 @@ function ProjectColumn({ id, columnTitle, Time, Total, projects }: Props) {
                 index={index}
                 date={ProjectCard.date}
                 title={ProjectCard.title}
-                typeActivity={ProjectCard.typeActivity}
+                activity={ProjectCard.activity}
                 typeProject={ProjectCard.typeProject}
                 description={ProjectCard.description}
               />

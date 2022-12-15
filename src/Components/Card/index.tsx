@@ -40,7 +40,7 @@ type Props = {
   id: string;
   index: number;
   title: string;
-  typeActivity: string;
+  activity: string;
   typeProject: string;
   description: string;
   date: Date | null;
@@ -50,7 +50,7 @@ function Card({
   id,
   index,
   title,
-  typeActivity,
+  activity,
   typeProject,
   description,
   date,
@@ -68,7 +68,7 @@ function Card({
           ref={provided.innerRef}
         >
           <Header>
-            <Type>{typeActivity}</Type>
+            <Type>{activity}</Type>
             <div className='code'>
               <p className='label'>Código:</p>
               <p className='code-number'>#12345</p>

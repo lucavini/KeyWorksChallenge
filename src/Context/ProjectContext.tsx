@@ -8,11 +8,12 @@ import { User } from './authContext';
 export interface Project {
   id: string;
   title: string;
-  typeActivity: string;
+  activity: string;
   typeProject: string;
   teams: string[];
   date: Date | null;
   description: string;
+  userId: string;
 }
 
 export interface Card {
@@ -90,11 +91,12 @@ export function ProjectProvider({ children }: ChildrenProps) {
   const [project, setProjects] = React.useState<Project>({
     id: '',
     title: '',
-    typeActivity: '',
+    activity: '',
     typeProject: '',
     teams: [],
     description: '',
     date: new Date(),
+    userId: '',
   });
 
   const Columns: Column = {
@@ -132,10 +134,11 @@ export function ProjectProvider({ children }: ChildrenProps) {
           title: card.title,
           typeProject: card.project,
           description: card.description,
-          typeActivity: card.activity,
+          activity: card.activity,
           id: card._id,
           date: new Date(card.date),
           teams: [],
+          userId: card.userId
         };
 
         return newcard;

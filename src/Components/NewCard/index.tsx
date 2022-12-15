@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
 /* eslint-disable no-undef */
 /* eslint-disable react/jsx-props-no-spreading */
@@ -17,10 +18,12 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 
 // Utils
+import axios from 'axios';
 import { ProjectContext } from '../../Context/ProjectContext';
 
 // styles
 import { BoxModal, Title } from './styles';
+import { useAuth } from '../../Context/authContext';
 
 const activities = ['desenvolvimento', 'ux | ui', 'financeiro'];
 const typeProject = ['Company', 'Client', 'Work'];
@@ -30,8 +33,12 @@ type Props = {
   handleClose: () => void;
 };
 
+const cardURL = 'https://kanban-back2.azurewebsites.net/card/';
+const proCardURL = 'https://kanban-back2.azurewebsites.net/card/pro/';
+
 function NewCard({ handleClose }: Props) {
-  const { project, setProjects, setWaiting } = React.useContext(ProjectContext);
+  const { project, setProjects, setWaiting, isPersonal } = React.useContext(ProjectContext);
+  const { userInfo } = useAuth();
   const [timeValue, setValue] = React.useState<Date | null>(new Date());
 
   const handleChange = (event: SelectChangeEvent<typeof project.teams>) => {
@@ -45,23 +52,32 @@ function NewCard({ handleClose }: Props) {
     }));
   };
 
-  const handleClick = () => {
+  const handleClick = async () => {
+    axios.post(isPersonal ? cardURL : proCardURL, {
+      ...project,
+      userId: userInfo._id,
+      project: project.typeProject,
+      date: timeValue,
+    });
+
     setWaiting((prevState) => [
+      ...prevState,
       {
         ...project,
         date: timeValue,
         id: `${String(Math.random() * 100000)}1sdf${String(Math.random() * 100000)}`,
       },
-      ...prevState,
     ]);
+
     setProjects({
       id: '',
       title: '',
-      typeActivity: '',
+      activity: '',
       typeProject: '',
       teams: [],
       description: '',
       date: new Date(),
+      userId: '',
     });
     handleClose();
   };
@@ -87,11 +103,11 @@ function NewCard({ handleClose }: Props) {
         <InputLabel>Tipo de Atividade</InputLabel>
         <Select
           label='Tipo de Atividade'
-          value={project?.typeActivity}
+          value={project?.activity}
           onChange={({ target }) =>
             setProjects((prevState) => ({
               ...prevState,
-              typeActivity: target.value,
+              activity: target.value,
             }))
           }
         >
