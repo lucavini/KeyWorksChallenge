@@ -6,7 +6,7 @@ interface authProviderProps {
 }
 
 export interface User {
-  id: string;
+  _id: string;
   name: string;
   email: string;
 }
@@ -21,38 +21,41 @@ interface authContextData {
   handleLogin: (params: loginProps) => Promise<any>;
   handleLogout: () => void;
   signed: boolean;
-  userId: string;
-  user: User;
+  userInfo: User;
   autoLogin: () => Promise<boolean>;
 }
 
 const AuthContext = React.createContext<authContextData>({} as authContextData);
 
 export function AuthProvider({ children }: authProviderProps) {
-  const [userId, setUserId] = React.useState('');
-  const [user, setUser] = React.useState<User>({} as User);
+  const [userInfo, setUserInfo] = React.useState<User>({} as User);
   const [signed, setSigned] = React.useState(true);
 
   const token = localStorage.getItem('@tokenJWT');
-  const userid = localStorage.getItem('@user');
+  const storagedUser = localStorage.getItem('@user');
 
   async function autoLogin() {
-    if (token && userid) {
+    if (token && storagedUser) {
       const tokenJWT = JSON.parse(token);
-      const id = JSON.parse(userid);
+      const user = JSON.parse(storagedUser);
 
       setSigned(true);
       api.defaults.headers.common.authorization = `Bearer ${tokenJWT}`;
 
       try {
-        const response = await api.get(`user/${id}`).then((res) => res.data.user);
+        const { _id, email, name }: User = await api
+          // eslint-disable-next-line no-underscore-dangle
+          .get(`user/${user._id}`)
+          .then((res) => res.data.user);
 
-        setUser(response);
-        setUserId(userid);
+        setUserInfo({
+          _id,
+          email,
+          name,
+        });
         setSigned(true);
       } catch (error) {
         setSigned(false);
-        setUserId('');
         localStorage.removeItem('@tokenJWT');
         localStorage.removeItem('@user');
         api.defaults.headers.common = { Authorization: false };
@@ -68,21 +71,26 @@ export function AuthProvider({ children }: authProviderProps) {
     autoLogin();
   }, []);
 
-  async function handleLogin({ email, password }: loginProps) {
-    const response = await api.post('auth/login', { email, password });
+  async function handleLogin(LoginProps: loginProps) {
+    const response = await api.post('auth/login', { email: LoginProps.email, password: LoginProps.password });
+
+    api.defaults.headers.common.authorization = `Bearer ${response.data.token}`;
+
+    const user: User = await api.get(`user/${response.data.id}`).then((res) => res.data.user);
+
+    setUserInfo({
+      ...user,
+    });
 
     setSigned(true);
-    setUserId(response.data.id);
-    api.defaults.headers.common.authorization = `Bearer ${response.data.token}`;
     localStorage.setItem('@tokenJWT', JSON.stringify(response.data.token));
-    localStorage.setItem('@user', JSON.stringify(response.data.id));
+    localStorage.setItem('@user', JSON.stringify(user));
 
     return response.status;
   }
 
   function handleLogout() {
     setSigned(false);
-    setUserId('');
     localStorage.removeItem('@tokenJWT');
     localStorage.removeItem('@user');
     api.defaults.headers.common = { Authorization: false };
@@ -92,7 +100,7 @@ export function AuthProvider({ children }: authProviderProps) {
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <AuthContext.Provider value={{ handleLogin, handleLogout, signed, userId, autoLogin, user }}>
+    <AuthContext.Provider value={{ handleLogin, handleLogout, signed, autoLogin, userInfo }}>
       {children}
     </AuthContext.Provider>
   );
@@ -100,8 +108,8 @@ export function AuthProvider({ children }: authProviderProps) {
 
 export function useAuth() {
   // eslint-disable-next-line operator-linebreak
-  const { handleLogin, handleLogout, signed, userId, autoLogin, user } =
+  const { handleLogin, handleLogout, signed, autoLogin, userInfo } =
     React.useContext(AuthContext);
 
-  return { handleLogin, handleLogout, signed, userId, autoLogin, user };
+  return { handleLogin, handleLogout, signed, autoLogin, userInfo };
 }

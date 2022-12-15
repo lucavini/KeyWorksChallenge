@@ -6,7 +6,18 @@ import { Container } from './styles';
 import { ProjectContext } from '../../Context/ProjectContext';
 
 function Projects() {
-  const { waiting, ongoing, pendency, finished, other } = React.useContext(ProjectContext);
+  const {
+    waiting,
+    ongoing,
+    pendency,
+    finished,
+    other,
+    getAllCards,
+  } = React.useContext(ProjectContext);
+
+  React.useEffect(() => {
+    getAllCards();
+  }, []);
 
   return (
     <Container>

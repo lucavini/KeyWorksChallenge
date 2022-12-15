@@ -3,6 +3,7 @@
 /* eslint-disable comma-dangle */
 import axios from 'axios';
 import React from 'react';
+import { User } from './authContext';
 
 export interface Project {
   id: string;
@@ -64,6 +65,7 @@ interface ProjectContextValue {
   Columns: Column;
   isPersonal: boolean;
   setIsPersonal: React.Dispatch<React.SetStateAction<boolean>>;
+  getAllCards: () => Promise<void>;
 }
 
 interface ChildrenProps {
@@ -73,6 +75,9 @@ interface ChildrenProps {
 export const ProjectContext = React.createContext<ProjectContextValue>(
   {} as ProjectContextValue
 );
+
+const cardURL = 'https://kanban-back2.azurewebsites.net/card/';
+const proCardURL = 'https://kanban-back2.azurewebsites.net/card/pro/';
 
 export function ProjectProvider({ children }: ChildrenProps) {
   const [waiting, setWaiting] = React.useState<Project[]>([]);
@@ -116,27 +121,28 @@ export function ProjectProvider({ children }: ChildrenProps) {
   };
 
   async function getAllCards() {
-    const response = await axios.get(
-      isPersonal
-        ? 'http://backkanban2-env.eba-xpytrdmw.us-east-2.elasticbeanstalk.com/card/637bc9adc3ab4c119a6a37dd'
-        : 'http://backkanban2-env.eba-xpytrdmw.us-east-2.elasticbeanstalk.com/card/pro/637bc9adc3ab4c119a6a37dd'
-    );
+    const storagedUser = localStorage.getItem('@user');
 
-    response.data.cards.map((card: Card) => {
-      const newcard: Project = {
-        title: card.title,
-        typeProject: card.project,
-        description: card.description,
-        typeActivity: card.activity,
-        id: card._id,
-        date: new Date(),
-        teams: [],
-      };
+    if (storagedUser) {
+      const user: User = JSON.parse(storagedUser);
+      const response = await axios.get(isPersonal ? `${cardURL}${user._id}` : `${proCardURL}${user._id}`);
 
-      setWaiting((prevState) => [...prevState, newcard]);
+      const cardsArray:Project[] = response.data.cards.map((card: Card) => {
+        const newcard: Project = {
+          title: card.title,
+          typeProject: card.project,
+          description: card.description,
+          typeActivity: card.activity,
+          id: card._id,
+          date: new Date(card.date),
+          teams: [],
+        };
 
-      return newcard;
-    });
+        return newcard;
+      });
+
+      setWaiting(cardsArray);
+    }
   }
 
   React.useEffect(() => {
@@ -161,6 +167,7 @@ export function ProjectProvider({ children }: ChildrenProps) {
         Columns,
         isPersonal,
         setIsPersonal,
+        getAllCards
       }}
     >
       {children}

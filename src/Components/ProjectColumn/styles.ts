@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const Column = styled.div`
   width: 333px;
-  min-height: 83vh;
+  min-height: 80vh;
+  padding-bottom: 20px;
   background: #eaedea;
   box-shadow: 0px 8px 8px #00000029;
   border-radius: 8px;
